@@ -16,20 +16,20 @@ class RegularItem(Item): #Regular items - degrade in quality by 1, degrade twice
         self.degrade_value = 1
 
     def update_quality(self):
-        if self.quality > QUALITY_MIN:
-            self.quality -= self.degrade_value
+        self.quality -= self.degrade_value
         self.sell_in -= 1
         if self.sell_in < 0:
             self.quality -= self.degrade_value
+        self.quality = max(self.quality, QUALITY_MIN)
 
 class AgingItem(Item): #Aging item - increases in quality the older it gets up to 50
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-        if self.quality < QUALITY_MAX:
-            self.quality += 1
+        self.quality += 1
         self.sell_in -= 1
+        self.quality = min(self.quality, QUALITY_MAX)
 
 class LegendaryItem(Item): #Legendary Item - Never sold or decreases in quality
     def __init__(self, name, sell_in, quality):
@@ -50,6 +50,7 @@ class BackstageItem(Item): #Bacstage item - Quality increases by 2 10 days befor
         if self.sell_in < 0:
             self.quality = 0
         self.sell_in -= 1
+        self.quality = min(self.quality, QUALITY_MAX)
 
 class ConjuredItem(RegularItem): #Conjured item - Subclass of Regular Item - "Conjured items degrade in Quality twice as fast as normal items"
     def __init__(self, name, sell_in, quality):
