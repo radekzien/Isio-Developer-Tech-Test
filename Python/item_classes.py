@@ -1,3 +1,6 @@
+QUALITY_MAX = 50
+QUALITY_MIN = 0
+
 class Item:
     def __init__(self, name, sell_in, quality):
         self.name = name
@@ -13,7 +16,7 @@ class RegularItem(Item): #Regular items - degrade in quality by 1, degrade twice
         self.degrade_value = 1
 
     def update_quality(self):
-        if self.quality > 0:
+        if self.quality > QUALITY_MIN:
             self.quality -= self.degrade_value
         self.sell_in -= 1
         if self.sell_in < 0:
@@ -24,7 +27,7 @@ class AgingItem(Item): #Aging item - increases in quality the older it gets up t
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-        if self.quality < 50:
+        if self.quality < QUALITY_MAX:
             self.quality += 1
         self.sell_in -= 1
 
