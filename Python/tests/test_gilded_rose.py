@@ -25,7 +25,10 @@ class GildedRoseTest(unittest.TestCase):
         """
         Checks for correct quality and sell_in logic for RegularItem
         """
-        items = [RegularItem("Regular Item", 10, 10), RegularItem("Expired Item", 10, 10)]
+        items = [
+            RegularItem("Regular Item", 10, 10), 
+            RegularItem("Expired Item", 10, 10)
+            ]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(items[0].sell_in, 9)
@@ -57,7 +60,12 @@ class GildedRoseTest(unittest.TestCase):
         """
         Checks for correct quality and sell_in logic for BackstageItem
         """
-        items = [BackstageItem("over10", 12, 5), BackstageItem("under10", 10, 5), BackstageItem("under5", 5, 5), BackstageItem("afterConcert", -1, 5)]
+        items = [
+            BackstageItem("over10", 12, 5), 
+            BackstageItem("under10", 10, 5), 
+            BackstageItem("under5", 5, 5), 
+            BackstageItem("afterConcert", -1, 5)]
+        
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(items[0].sell_in, 11)
@@ -73,7 +81,11 @@ class GildedRoseTest(unittest.TestCase):
         """
         Checks for correct quality and sell_in logic for ConjuredItem
         """
-        items = [ConjuredItem("Regular Item", 10, 10), ConjuredItem("Expired Item", 10, 10)]
+        items = [
+            ConjuredItem("Regular Item", 10, 10), 
+            ConjuredItem("Expired Item", 10, 10)
+            ]
+        
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(items[0].sell_in, 9)
@@ -86,7 +98,10 @@ class GildedRoseTest(unittest.TestCase):
         """
         Tests whether items increasing in quality never go over the maximum quality value
         """
-        items = [AgingItem("AgingItem", 3, QUALITY_MAX), BackstageItem("BackstageItem", 3, QUALITY_MAX)]
+        items = [
+            AgingItem("AgingItem", 3, QUALITY_MAX), 
+            BackstageItem("BackstageItem", 3, QUALITY_MAX)
+            ]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         for item in items:
@@ -96,7 +111,13 @@ class GildedRoseTest(unittest.TestCase):
         """
         Tests whether items decreasing in quality never go under the minimum quality value
         """
-        items = [RegularItem("RegularItem", 1, QUALITY_MIN), RegularItem("ExpiredRegularItem", -1, QUALITY_MIN), ConjuredItem("ConjuredItem", 1, QUALITY_MIN), ConjuredItem("ExpiredConjuredItem", -1, QUALITY_MIN)]
+        items = [
+            RegularItem("RegularItem", 1, QUALITY_MIN), 
+            RegularItem("ExpiredRegularItem", -1, QUALITY_MIN), 
+            ConjuredItem("ConjuredItem", 1, QUALITY_MIN), 
+            ConjuredItem("ExpiredConjuredItem", -1, QUALITY_MIN)
+            ]
+        
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         for item in items:
@@ -113,7 +134,16 @@ def test_Multi_Day_Behavior(self):
             - Legendary items remain unchanged
     """
     items = [
-        RegularItem("RegularItem", 2, 5), RegularItem("ExpiredRegularItem", 0, 5), ConjuredItem("ConjuredItem", 2, 6), ConjuredItem("ExpiredConjuredItem", 0, 6), AgingItem("AgingItem", 2, 48), BackstageItem("BackstageItemOver10", 12, 5), BackstageItem("BackstageItemUnder10", 10, 5), BackstageItem("BackstageItemUnder5", 5, 5), BackstageItem("BackstageItemAfterConcert", 0, 5), LegendaryItem("LegendaryItem", 10, 80)
+        RegularItem("RegularItem", 2, 5), 
+        RegularItem("ExpiredRegularItem", 0, 5), 
+        ConjuredItem("ConjuredItem", 2, 6), 
+        ConjuredItem("ExpiredConjuredItem", 0, 6), 
+        AgingItem("AgingItem", 2, 48), 
+        BackstageItem("BackstageItemOver10", 12, 5), 
+        BackstageItem("BackstageItemUnder10", 10, 5), 
+        BackstageItem("BackstageItemUnder5", 5, 5), 
+        BackstageItem("BackstageItemAfterConcert", 0, 5), 
+        LegendaryItem("LegendaryItem", 10, 80)
     ]
 
     gilded_rose = GildedRose(items)
