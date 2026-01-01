@@ -27,14 +27,14 @@ class GildedRoseTest(unittest.TestCase):
         """
         items = [
             RegularItem("Regular Item", 10, 10), 
-            RegularItem("Expired Item", 10, 10)
+            RegularItem("Expired Item", -1, 10)
             ]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(items[0].sell_in, 9)
         self.assertEqual(items[0].quality, 10 - items[0].degrade_value)
-        self.assertEqual(items[1].sell_in, 9)
-        self.assertEqual(items[1].quality, 10 - (items[0].degrade_value * 2))
+        self.assertEqual(items[1].sell_in, -2)
+        self.assertEqual(items[1].quality, 10 - (items[1].degrade_value * 2))
 
     def test_AgingItemLogic(self):
         """
@@ -83,15 +83,16 @@ class GildedRoseTest(unittest.TestCase):
         """
         items = [
             ConjuredItem("Regular Item", 10, 10), 
-            ConjuredItem("Expired Item", 10, 10)
+            ConjuredItem("Expired Item", -1, 10)
             ]
-        
+
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(items[0].sell_in, 9)
         self.assertEqual(items[0].quality, 10 - items[0].degrade_value)
-        self.assertEqual(items[1].sell_in, 9)
-        self.assertEqual(items[1].quality, 10 - (items[0].degrade_value * 2))
+        self.assertEqual(items[1].sell_in, -2)
+        print(items[1].degrade_value)
+        self.assertEqual(items[1].quality, 10 - (items[1].degrade_value * 2))
 
 #--- CONSTRAINT TESTS ---
     def test_Max(self):
