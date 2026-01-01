@@ -20,6 +20,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(2, items[0].quality)
         self.assertEqual(10, items[0].sell_in)
 
+#--- QUALITY AND SELL_IN LOGIC TESTS FOR EACH CLASS ---
     def test_RegularItemLogic(self):
         """
         Checks for correct quality and sell_in logic for RegularItem
@@ -79,6 +80,27 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(items[0].quality, 10 - items[0].degrade_value)
         self.assertEqual(items[1].sell_in, 9)
         self.assertEqual(items[1].quality, 10 - (items[0].degrade_value * 2))
+
+#--- CONSTRAINT TESTS ---
+    def test_Max(self):
+        """
+        Tests whether items increasing in quality never go over the maximum quality value
+        """
+        items = [AgingItem("AgingItem", 3, QUALITY_MAX), BackstageItem("BackstageItem", 3, QUALITY_MAX)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        for item in items:
+            self.assertEqual(item.quality, QUALITY_MAX)
+
+    def test_Min(self):
+        """
+        Tests whether items decreasing in quality never go under the minimum quality value
+        """
+        items = [RegularItem("RegularItem", 1, QUALITY_MIN), RegularItem("ExpiredRegularItem", -1, QUALITY_MIN), ConjuredItem("ConjuredItem", 1, QUALITY_MIN), ConjuredItem("ExpiredConjuredItem", -1, QUALITY_MIN)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        for item in items:
+            self.assertEqual(item.quality, QUALITY_MIN)
 
 if __name__ == '__main__':
     unittest.main()
