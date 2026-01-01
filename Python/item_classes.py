@@ -24,7 +24,7 @@ class RegularItem(Item):
     """
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
-        self.degrade_value = 1 #Made as an explciit variable so it can be changed/manipulated by subclasses
+        self.degrade_value = 1 #Made as an explicit variable so it can be changed/manipulated by subclasses
 
     def update_quality(self):
         self.quality -= self.degrade_value
