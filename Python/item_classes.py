@@ -80,6 +80,8 @@ class BackstageItem(Item):
                 self.quality += 2
             elif self.sell_in <= 5:
                 self.quality += 3
+            else:
+                self.quality += 1
         self.quality = min(self.quality, QUALITY_MAX)
 
 class ConjuredItem(RegularItem):
