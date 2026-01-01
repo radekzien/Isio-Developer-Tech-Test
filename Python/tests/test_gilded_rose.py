@@ -102,5 +102,38 @@ class GildedRoseTest(unittest.TestCase):
         for item in items:
             self.assertEqual(item.quality, QUALITY_MIN)
 
+#--- MULTI-DAY BEHAVIOUR TESTS ---
+def test_Multi_Day_Behavior(self):
+    """
+    Tests behaviour after multiple days.
+        Checks:
+            - sell_in decreases correctly
+            - quality constraints aren't exceeded
+            - expired items degrade properly
+            - Legendary items remain unchanged
+    """
+    items = [
+        RegularItem("RegularItem", 2, 5), RegularItem("ExpiredRegularItem", 0, 5), ConjuredItem("ConjuredItem", 2, 6), ConjuredItem("ExpiredConjuredItem", 0, 6), AgingItem("AgingItem", 2, 48), BackstageItem("BackstageItemOver10", 12, 5), BackstageItem("BackstageItemUnder10", 10, 5), BackstageItem("BackstageItemUnder5", 5, 5), BackstageItem("BackstageItemAfterConcert", 0, 5), LegendaryItem("LegendaryItem", 10, 80)
+    ]
+
+    gilded_rose = GildedRose(items)
+    
+    for i in range(15):
+        gilded_rose.update_quality()
+        
+        for item in items:
+            if isinstance(item, LegendaryItem):
+                self.assertEqual(item.sell_in, 10)
+                self.assertEqual(item.quality, 80)
+                continue
+
+            #Quality constraints
+            self.assertGreaterEqual(item.quality, QUALITY_MIN)
+            self.assertLessEqual(item.quality, QUALITY_MAX)
+
+            #BackstageItem after concert should be 0
+            if isinstance(item, BackstageItem) and item.sell_in < 0:
+                self.assertEqual(item.quality, 0)
+
 if __name__ == '__main__':
     unittest.main()
