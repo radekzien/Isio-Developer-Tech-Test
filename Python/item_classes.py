@@ -56,7 +56,7 @@ class LegendaryItem(Item):
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-        pass
+       self.quality = min(self.quality, QUALITY_MAX) #Enforces quality constraint
 
 class BackstageItem(Item):
     """
@@ -72,13 +72,14 @@ class BackstageItem(Item):
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-        if self.sell_in <= 10 and self.sell_in > 5:
-            self.quality += 2
-        elif self.sell_in <= 5:
-            self.quality += 3
+        self.sell_in -= 1
         if self.sell_in < 0: #Less than instead of <= because assumed value still holds day of the concert
             self.quality = 0
-        self.sell_in -= 1
+        else:
+            if self.sell_in <= 10 and self.sell_in > 5:
+                self.quality += 2
+            elif self.sell_in <= 5:
+                self.quality += 3
         self.quality = min(self.quality, QUALITY_MAX)
 
 class ConjuredItem(RegularItem):
