@@ -27,8 +27,8 @@ class RegularItem(Item):
         self.degrade_value = 1 #Made as an explicit variable so it can be changed/manipulated by subclasses
 
     def update_quality(self):
-        self.quality -= self.degrade_value
         self.sell_in -= 1
+        self.quality -= self.degrade_value
         if self.sell_in < 0:
             self.quality -= self.degrade_value #Degrades a second time if past sellby date
         self.quality = max(self.quality, QUALITY_MIN)
@@ -43,8 +43,8 @@ class AgingItem(Item):
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-        self.quality += 1
         self.sell_in -= 1
+        self.quality += 1
         self.quality = min(self.quality, QUALITY_MAX)
 
 class LegendaryItem(Item):
@@ -56,7 +56,7 @@ class LegendaryItem(Item):
         super().__init__(name, sell_in, quality)
     
     def update_quality(self):
-       self.quality = min(self.quality, QUALITY_MAX) #Enforces quality constraint
+       pass
 
 class BackstageItem(Item):
     """
