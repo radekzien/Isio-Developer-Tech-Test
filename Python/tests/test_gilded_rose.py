@@ -6,15 +6,19 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import unittest
 
-from gilded_rose import Item, GildedRose
+from gilded_rose import GildedRose
+from item_classes import *
 
 
 class GildedRoseTest(unittest.TestCase):
-    def test_example_test(self):
-        items = [Item("Example Item", 0, 0)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual("this will fail", items[0].name)
-        
+    def test_Item(self):
+        """
+        Checks for correct instantiaton of Item Class
+        """
+        items = [Item("Example Item", 10, 2)]
+        self.assertEqual("Example Item", items[0].name)
+        self.assertEqual(2, items[0].quality)
+        self.assertEqual(10, items[0].sell_in)
+
 if __name__ == '__main__':
     unittest.main()
